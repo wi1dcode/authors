@@ -37,7 +37,7 @@ app.get('/:id', (req, res) => {
 app.get('/:id/books', (req, res) => {
     
     const author = authors[req.params.id - 1]
-    res.send(`${author.books}`)   
+    res.send(author.books.join(' , '))   
 })
 
 module.exports = app
