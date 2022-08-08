@@ -31,13 +31,54 @@ var authors = [
 app.get('/:id', (req, res) => {
     
     const author = authors[req.params.id - 1]
+    if (author) {
     res.send(`${author.name}, ${author.nationality}`)   
+    } else {
+        res.status(404).send('Not Found')
+}
 })
 
 app.get('/:id/books', (req, res) => {
     
     const author = authors[req.params.id - 1]
-    res.send(author.books.join(' , '))   
+    if (author) {
+        res.send(author.books.join(' , '))   
+    } else {
+        res.status(404).send('Not Found')
+    }
 })
+
+app.get('/json/:id', (req, res) => {
+    
+    const author = authors[req.params.id - 1]
+    
+    if (author) {
+        const formattedAuthor = {
+            name: author.name,
+            nationality: author.nationality
+        }
+        
+        res.send(formattedAuthor)  
+    } else {
+        res.status(404).send('Not Found')
+    }
+
+})
+app.get('/json/:id/books', (req, res) => {
+    
+    const author = authors[req.params.id - 1]
+    
+    if (author) {
+        const formattedAuthor = {
+            books: author.books
+        }
+        
+        res.send(formattedAuthor)  
+    } else {
+        res.status(404).send('Not Found')
+    }
+
+})
+
 
 module.exports = app
